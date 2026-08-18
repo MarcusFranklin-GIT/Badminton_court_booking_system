@@ -9,14 +9,17 @@ A simple badminton court booking system built with Spring Boot and MongoDB. Perf
 - **Libraries**: Lombok, Spring Data MongoDB, Validation
 
 ## ✨ Features
-- ✅ Manage courts (CRUD operations)
-- ✅ Book time slots for courts with conflict detection
-- ✅ Check court availability
-- ✅ View bookings by court or customer
-- ✅ Cancel bookings
-- ✅ Automatic price calculation based on duration
-- ✅ Booking status tracking (PENDING, CONFIRMED, CANCELLED, COMPLETED)
-- ✅ REST API with proper HTTP status codes
+- ✅ **JWT Authentication** - Secure token-based authentication
+- ✅ **Role-Based Access Control** - Admin and Customer roles
+- ✅ **User Management** - Registration and login
+- ✅ **Manage Courts** - CRUD operations (Admin only)
+- ✅ **Smart Booking System** - Time slot booking with conflict detection
+- ✅ **Court Availability** - Real-time availability check
+- ✅ **Booking Management** - View, create, and cancel bookings
+- ✅ **Automatic Pricing** - Price calculation based on duration
+- ✅ **Booking Status Tracking** - PENDING, CONFIRMED, CANCELLED, COMPLETED
+- ✅ **Secure Passwords** - BCrypt hashing
+- ✅ **REST API** - Clean API with proper HTTP status codes
 
 ## 📋 Prerequisites
 - Java 17 or higher (tested with Java 21)
@@ -47,17 +50,22 @@ The server will start on `http://localhost:8081`
 
 ### Quick API Overview
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/courts` | Create a new court |
-| GET | `/api/courts` | Get all courts |
-| GET | `/api/courts/available` | Get available courts |
-| POST | `/api/bookings` | Create a booking |
-| GET | `/api/bookings` | Get all bookings |
-| GET | `/api/bookings/my-bookings?email={email}` | Get customer's bookings |
-| PATCH | `/api/bookings/{id}/cancel` | Cancel a booking |
+| Method | Endpoint | Access | Description |
+|--------|----------|--------|-------------|
+| POST | `/api/auth/register` | Public | Register as customer |
+| POST | `/api/auth/register-admin` | Public | Register as admin |
+| POST | `/api/auth/login` | Public | Login |
+| POST | `/api/courts` | 🔒 Admin | Create a new court |
+| GET | `/api/courts` | Public | Get all courts |
+| GET | `/api/courts/available` | Public | Get available courts |
+| POST | `/api/bookings` | 🔒 Auth | Create a booking |
+| GET | `/api/bookings` | 🔒 Auth | Get all bookings |
+| GET | `/api/bookings/my-bookings?email={email}` | 🔒 Auth | Get customer's bookings |
+| PATCH | `/api/bookings/{id}/cancel` | 🔒 Auth | Cancel a booking |
 
-**📖 Full API Documentation:** See [POSTMAN_TESTING.md](POSTMAN_TESTING.md) for complete API reference with examples.
+**📖 Complete Documentation:**
+- **[AUTHENTICATION_GUIDE.md](AUTHENTICATION_GUIDE.md)** - JWT auth, user roles, security
+- **[POSTMAN_TESTING.md](POSTMAN_TESTING.md)** - Complete API testing guide
 
 ## 🧪 Testing with Postman
 
@@ -85,16 +93,19 @@ curl http://localhost:8081/api/courts
 ```
 batmition/
 ├── src/main/java/com/courtbooking/batmition/
-│   ├── model/           # Domain models (Court, Booking)
+│   ├── model/           # Domain models (User, Court, Booking)
 │   ├── repository/      # MongoDB repositories
 │   ├── service/         # Business logic
 │   ├── controller/      # REST API endpoints
+│   ├── security/        # JWT & Spring Security config
+│   ├── dto/             # Data Transfer Objects
 │   └── BatmitionApplication.java
 ├── src/main/resources/
 │   └── application.properties
 ├── pom.xml
 ├── README.md
-└── POSTMAN_TESTING.md   # Complete API testing guide
+├── AUTHENTICATION_GUIDE.md    # JWT auth & roles guide
+└── POSTMAN_TESTING.md         # API testing guide
 ```
 
 ## 💡 What is Vibe Coding?
@@ -111,8 +122,8 @@ This project demonstrates vibe coding principles:
 This is the MVP! Here are ideas to extend it:
 
 ### Backend Enhancements
-- [ ] Add authentication (Spring Security + JWT)
-- [ ] Add user roles (Admin, Customer)
+- [x] ✅ Add authentication (Spring Security + JWT)
+- [x] ✅ Add user roles (Admin, Customer)
 - [ ] Payment integration (Stripe/Razorpay)
 - [ ] Email notifications
 - [ ] SMS notifications
