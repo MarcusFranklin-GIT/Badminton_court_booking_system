@@ -64,6 +64,8 @@ The server will start on `http://localhost:8081`
 | PATCH | `/api/bookings/{id}/cancel` | 🔒 Auth | Cancel a booking |
 
 **📖 Complete Documentation:**
+- **[HOW_IT_WORKS.md](HOW_IT_WORKS.md)** - 🧠 Complete technical explanation (START HERE!)
+- **[QUICK_START.md](QUICK_START.md)** - Get running in 5 minutes
 - **[AUTHENTICATION_GUIDE.md](AUTHENTICATION_GUIDE.md)** - JWT auth, user roles, security
 - **[POSTMAN_TESTING.md](POSTMAN_TESTING.md)** - Complete API testing guide
 
